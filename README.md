@@ -1,0 +1,5 @@
+$findroles [partial name or id]
+$addrole [target] [rolename or id]
+$createrole [role tagged or id]
+$allowrole [role by id or target] [role to be allowed to add by id]
+$disallowrole [role by id or target] [role to not be allowed to add by id]
