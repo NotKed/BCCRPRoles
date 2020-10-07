@@ -1,11 +1,23 @@
 const Client = require('./src/structure/Client');
 const version = '1.0.0';
+const config = require('./config.json');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const mongoose = require('mongoose');
 const { exec } = require('child_process');
-
 const client = new Client();
+
+exec("git pull", (error, stdout, stderr) => {
+    client.logger.log("Checking for update.")
+    if(stdout == "Already up to date.\n") {
+        client.logger.log("No new update available.")
+    } else {
+        client.logger.log("Downloading new update.")
+        setTimeout(() => {
+            exec(config.restartCommand);
+        }, 1000*10);
+    }
+});
 
 client.functions = {};
 client.functions.onReady = function() {
@@ -18,18 +30,6 @@ client.functions.onReady = function() {
     console.log("-------------------------------------------------------------------------------------------------");
     client.logger.log(`Success: BCCRP Roles started.`)
 };
-
-exec("dir", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-});
 
 mongoose.connect('mongodb://localhost:27017/directoire', {
     useNewUrlParser: true,
