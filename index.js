@@ -1,23 +1,9 @@
 const Client = require('./src/structure/Client');
 const version = '1.0.0';
-const config = require('./config.json');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const mongoose = require('mongoose');
-const { exec } = require('child_process');
 const client = new Client();
-
-exec("git pull", (error, stdout, stderr) => {
-    client.logger.log("Checking for update.")
-    if(stdout == "Already up to date.\n") {
-        client.logger.log("No new update available.")
-    } else {
-        client.logger.log("Downloading new update.")
-        setTimeout(() => {
-            exec(config.restartCommand);
-        }, 1000*10);
-    }
-});
 
 client.functions = {};
 client.functions.onReady = function() {
@@ -29,6 +15,7 @@ client.functions.onReady = function() {
     console.log(chalk.white('-'), chalk.red("Bot Prefix:"), chalk.white(client.config.discordPrefix));
     console.log("-------------------------------------------------------------------------------------------------");
     client.logger.log(`Success: BCCRP Roles started.`)
+    client.updater.run(client);
 };
 
 mongoose.connect('mongodb://localhost:27017/directoire', {

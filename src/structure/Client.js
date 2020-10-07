@@ -4,6 +4,7 @@ const {
     MessageEmbed
 } = require('discord.js');
 const logger = require('./Logger');
+const updater = require('./Updater');
 const { readdirSync } = require('fs');
 
 class DiscordClient extends Client {
@@ -11,6 +12,7 @@ class DiscordClient extends Client {
     constructor(options) {
         super(options);
         this.logger = logger;
+        this.updater = updater;
         this.config = require('../../config.json')
         this.commands = new Collection();
 
