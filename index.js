@@ -38,6 +38,5 @@ mongoose.connect('mongodb://localhost:27017/directoire', {
 
 client.on("ready", async () => {
     client.functions.onReady();
-    console.log("test");
 })
 
