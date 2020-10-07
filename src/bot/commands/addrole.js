@@ -19,7 +19,7 @@ class AddRole extends Command {
             return message.reply("please provide a role to add to the user!");
 
         let data = await Role.findOne({$or: [
-            {rolename: args.slice(1).join(" ")},
+            {rolename: new RegExp(`${args.slice(1).join(" ")}`, "i")},
             {roleid: message.mentions.roles.first() ? message.mentions.roles.first().id : args[1]},
         ]});
 

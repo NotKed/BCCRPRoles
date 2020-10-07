@@ -17,7 +17,7 @@ class FindRoles extends Command {
         let roles = [];
         let data = await Role.find().lean();
         for(let role in data) {
-            if(data[role].rolename.toLowerCase().includes(args[0]) || data[role].roleid == args[0]) {
+            if(data[role].rolename.toLowerCase().includes(args.join(" ")) || data[role].roleid == args[0]) {
                 roles.push(data[role])
             }
         }

@@ -19,7 +19,7 @@ class RemoveRole extends Command {
             return message.reply("please provide a role to remove from the user!");
 
         let data = await Role.findOne({$or: [
-            {rolename: args[1]},
+            {rolename: new RegExp(`${args.slice(1).join(" ")}`, "i")},
             {roleid: message.mentions.roles.first() ? message.mentions.roles.first().id : args[1]},
         ]});
 
